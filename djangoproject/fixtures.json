@@ -1,0 +1,172 @@
+[
+{
+  "model": "core.continent",
+  "pk": 1,
+  "fields": {
+    "continent": "Africa"
+  }
+},
+{
+  "model": "core.continent",
+  "pk": 2,
+  "fields": {
+    "continent": "America"
+  }
+},
+{
+  "model": "core.continent",
+  "pk": 3,
+  "fields": {
+    "continent": "Asia"
+  }
+},
+{
+  "model": "core.continent",
+  "pk": 4,
+  "fields": {
+    "continent": "Europe"
+  }
+},
+{
+  "model": "core.continent",
+  "pk": 5,
+  "fields": {
+    "continent": "Oceania"
+  }
+},
+{
+  "model": "core.population",
+  "pk": 1,
+  "fields": {
+    "continent": 1,
+    "year": 1800,
+    "population": 107
+  }
+},
+{
+  "model": "core.population",
+  "pk": 2,
+  "fields": {
+    "continent": 2,
+    "year": 1800,
+    "population": 31
+  }
+},
+{
+  "model": "core.population",
+  "pk": 3,
+  "fields": {
+    "continent": 2,
+    "year": 1900,
+    "population": 156
+  }
+},
+{
+  "model": "core.population",
+  "pk": 4,
+  "fields": {
+    "continent": 2,
+    "year": 2008,
+    "population": 914
+  }
+},
+{
+  "model": "core.population",
+  "pk": 5,
+  "fields": {
+    "continent": 3,
+    "year": 1800,
+    "population": 635
+  }
+},
+{
+  "model": "core.population",
+  "pk": 6,
+  "fields": {
+    "continent": 3,
+    "year": 1900,
+    "population": 947
+  }
+},
+{
+  "model": "core.population",
+  "pk": 7,
+  "fields": {
+    "continent": 3,
+    "year": 2008,
+    "population": 4054
+  }
+},
+{
+  "model": "core.population",
+  "pk": 8,
+  "fields": {
+    "continent": 4,
+    "year": 1800,
+    "population": 203
+  }
+},
+{
+  "model": "core.population",
+  "pk": 9,
+  "fields": {
+    "continent": 4,
+    "year": 1900,
+    "population": 408
+  }
+},
+{
+  "model": "core.population",
+  "pk": 10,
+  "fields": {
+    "continent": 4,
+    "year": 2008,
+    "population": 732
+  }
+},
+{
+  "model": "core.population",
+  "pk": 11,
+  "fields": {
+    "continent": 5,
+    "year": 1800,
+    "population": 2
+  }
+},
+{
+  "model": "core.population",
+  "pk": 12,
+  "fields": {
+    "continent": 5,
+    "year": 1900,
+    "population": 6
+  }
+},
+{
+  "model": "core.population",
+  "pk": 13,
+  "fields": {
+    "continent": 5,
+    "year": 2008,
+    "population": 34
+  }
+},
+{
+  "model": "core.population",
+  "pk": 14,
+  "fields": {
+    "continent": 1,
+    "year": 1900,
+    "population": 133
+  }
+},
+{
+  "model": "core.population",
+  "pk": 15,
+  "fields": {
+    "continent": 1,
+    "year": 2008,
+    "population": 973
+  }
+}
+]

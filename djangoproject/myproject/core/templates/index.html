@@ -1,0 +1,100 @@
+<html>
+<head>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Font Awesome core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="http://code.jquery.com/jquery-git1.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Highcharts and Django</h2>
+
+    <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row clearfix">
+            <p><a href="https://github.com/rg3915/highcharts"><span class="fa fa-github"></span> Fork on GitHub</a></p>
+        </div>
+    </footer>
+
+</div>
+
+<script>
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Historic World Population by Region'
+        },
+        subtitle: {
+            text: 'Source: Wikipedia.org'
+        },
+        xAxis: {
+            // categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+            categories: [{% for item in continents %}'{{ item.continent }}',{% endfor %}],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Population (millions)',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' millions'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 100,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Year 1800',
+            // data: [107, 31, 635, 203, 2]
+            data: [{% for item in Year1800 %}{{ item.population }},{% endfor %}]
+        }, {
+            name: 'Year 1900',
+            // data: [133, 156, 947, 408, 6]
+            data: [{% for item in Year1900 %}{{ item.population }},{% endfor %}]
+        }, {
+            name: 'Year 2008',
+            // data: [973, 914, 4054, 732, 34]
+            data: [{% for item in Year2008 %}{{ item.population }},{% endfor %}]
+        }]
+    });
+});
+</script>
+
+</body>
+</html>
