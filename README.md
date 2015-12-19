@@ -7,3 +7,5 @@ git clone https://github.com/rg3915/highcharts.git
 cd highcharts
 source setup.sh
 ```
+
+![img](img/basic_bar.png)
