@@ -1,8 +1,9 @@
-# Highcharts
+# Highcharts and Django
 
-Highcharts test examples.
+Highcharts and Django test examples.
 
 ```bash
 git clone https://github.com/rg3915/highcharts.git
+cd highcharts
 source setup.sh
 ```

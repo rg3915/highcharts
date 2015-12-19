@@ -12,8 +12,10 @@ source .venv/bin/activate
 cd djangoproject
 
 echo "${green}>>> Installing the Django${reset}"
-pip install - requirements.txt
-# ./manage.py dumpdata core --format=json --indent=2 > fixtures.json
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
 python manage.py loaddata fixtures.json
+# python manage.py dumpdata core --format=json --indent=2 > fixtures.json
 python manage.py runserver
 echo "${green}>>> Done${reset}"
