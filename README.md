@@ -8,4 +8,10 @@ cd highcharts
 source setup.sh
 ```
 
+### Bar chart
+
 ![img](img/basic_bar.png)
+
+### Column chart
+
+![img](img/columnchart.png)
