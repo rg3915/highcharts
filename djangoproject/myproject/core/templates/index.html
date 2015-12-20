@@ -1,36 +1,8 @@
-{% load static %}
-<html>
-<head>
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+{% extends "base.html" %}
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <!-- Font Awesome core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <script src="http://code.jquery.com/jquery-git1.min.js"></script>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js"></script>
-
-</head>
-
-<body>
-
-<div class="container">
-    <h2>Highcharts and Django</h2>
-
-    <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="row clearfix">
-            <p><a href="https://github.com/rg3915/highcharts"><span class="fa fa-github"></span> Fork on GitHub</a></p>
-        </div>
-    </footer>
-
-</div>
-
-<script src="{% static 'js/bar_chart.js' %}"></script>
-
-</body>
-</html>
+{% block content %}
+    <div class="jumbotron">
+        <h2>Highcharts and Django</h2>
+        <p>Highcharts and Django test examples.</p>
+    </div>
+{% endblock content %}

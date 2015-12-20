@@ -10,6 +10,14 @@ def home(request):
     return render(request, 'index.html')
 
 
+def barchart(request):
+    return render(request, 'core/barchart.html')
+
+
+def columnchart(request):
+    return render(request, 'core/columnchart.html')
+
+
 def population_list_json(request):
     ''' JSON used to generate the graphic '''
     continents = Continent.objects.all()

@@ -1,0 +1,46 @@
+{% load static %}
+<html>
+<head>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Font Awesome core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="http://code.jquery.com/jquery-git1.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+    <style type="text/css">
+      /* Move down content because we have a fixed navbar that is 50px tall */
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        /*color: #5a5a5a;*/
+      }
+    </style>
+
+</head>
+
+<body>
+
+{% include "menu.html" %}
+
+<div class="container">
+
+{% block content %}{% endblock content %}
+
+    <!-- Footer -->
+    <footer>
+        <div class="row clearfix">
+            <p><a href="https://github.com/rg3915/highcharts"><span class="fa fa-github"></span> Fork on GitHub</a></p>
+        </div>
+    </footer>
+
+</div>
+
+{% block js %}{% endblock js %}
+
+</body>
+</html>
