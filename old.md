@@ -2,8 +2,8 @@
 
 ### Bar chart
 
-![img](img/basic_bar.png)
+![img](img/old_img/basic_bar.png)
 
 ### Column chart
 
-![img](img/columnchart.png)
+![img](img/old_img/columnchart.png)
