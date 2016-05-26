@@ -58,3 +58,5 @@ target/
 
 *.venv
 *.sqlite3
+.env
+todo.txt

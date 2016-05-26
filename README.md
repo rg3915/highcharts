@@ -8,10 +8,6 @@ cd highcharts
 source setup.sh
 ```
 
-### Bar chart
+# Projeto antigo
 
-![img](img/basic_bar.png)
-
-### Column chart
-
-![img](img/columnchart.png)
+Veja o [projeto antigo](old.md).
