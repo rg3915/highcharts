@@ -3,11 +3,11 @@ from django.utils.formats import number_format
 
 
 class Dollar(models.Model):
-    date = models.DateField('data')
+    date_dollar = models.DateField('data')
     value = models.DecimalField('valor', max_digits=4, decimal_places=3)
 
     class Meta:
-        ordering = ['date']
+        ordering = ['date_dollar']
         verbose_name = 'dólar'
         verbose_name_plural = 'dólares'
 
@@ -16,11 +16,11 @@ class Dollar(models.Model):
 
 
 class Euro(models.Model):
-    date = models.DateField('data')
+    date_euro = models.DateField('data')
     value = models.DecimalField('valor', max_digits=4, decimal_places=3)
 
     class Meta:
-        ordering = ['date']
+        ordering = ['date_euro']
         verbose_name = 'euro'
         verbose_name_plural = 'euros'
 
