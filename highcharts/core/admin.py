@@ -4,14 +4,14 @@ from .models import Dollar, Euro, Customer, Category, Product, Sale, SaleDetail
 
 @admin.register(Dollar)
 class DollarAdmin(admin.ModelAdmin):
-    date_hierarchy = 'date_dollar'
-    list_display = ['date_dollar', 'value']
+    date_hierarchy = 'date'
+    list_display = ['date', 'value']
 
 
 @admin.register(Euro)
 class EuroAdmin(admin.ModelAdmin):
-    date_hierarchy = 'date_euro'
-    list_display = ['date_euro', 'value']
+    date_hierarchy = 'date'
+    list_display = ['date', 'value']
 
 
 admin.site.register(Customer)

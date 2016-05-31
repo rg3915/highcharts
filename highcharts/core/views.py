@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def dollar_graphic(request):
+    return render(request, 'dollar_graphic.html')

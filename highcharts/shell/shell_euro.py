@@ -13,11 +13,11 @@ with open('highcharts/fix/euro.csv', 'r') as f:
 
 
 for i in euro_list:
-    d = i['date_euro']
+    d = i['date']
     # Transforma '%d/%m/%Y' para '%Y-%m-%d'.
     d = datetime.datetime.strptime(d, '%d/%m/%Y').strftime('%Y-%m-%d')
     obj = Euro.objects.create(
-        date_euro=d,
+        date=d,
         value=i['value']
     )
 
