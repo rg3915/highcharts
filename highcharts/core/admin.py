@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Dollar, Euro, Customer, Category, Product, Sale, SaleDetail
+from .models import Dollar, Euro, Category, Product
 
 
 @admin.register(Dollar)
@@ -14,7 +14,10 @@ class EuroAdmin(admin.ModelAdmin):
     list_display = ['date', 'value']
 
 
-admin.site.register(Customer)
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['product', 'category']
+    filter_list = ['category', ]
+
+
 admin.site.register(Category)
-admin.site.register(Product)
-admin.site.register(Sale)

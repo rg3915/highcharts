@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.formats import number_format
 
 
 class Dollar(models.Model):
@@ -28,28 +27,6 @@ class Euro(models.Model):
         return self.value
 
 
-class TimeStampedModel(models.Model):
-    created = models.DateTimeField(
-        'criado em', auto_now_add=True, auto_now=False)
-    modified = models.DateTimeField(
-        'modificado em', auto_now_add=False, auto_now=True)
-
-    class Meta:
-        abstract = True
-
-
-class Customer(models.Model):
-    name = models.CharField('nome', max_length=50, unique=True)
-
-    class Meta:
-        ordering = ['name']
-        verbose_name = 'cliente'
-        verbose_name_plural = 'clientes'
-
-    def __str__(self):
-        return self.name
-
-
 class Category(models.Model):
     category = models.CharField('categoria', max_length=50, unique=True)
 
@@ -74,37 +51,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product
-
-    def get_price(self):
-        return "R$ %s" % number_format(self.price, 2)
-
-    def get_ipi(self):
-        return "%s" % number_format(self.ipi * 100, 0)
-
-
-class Sale(TimeStampedModel):
-    customer = models.ForeignKey('Customer', verbose_name='cliente')
-
-    class Meta:
-        verbose_name = 'venda'
-        verbose_name_plural = 'vendas'
-
-    def __str__(self):
-        return str(self.id)
-
-    def get_detalhe(self):
-        return u"/sale/%i" % self.id
-
-
-class SaleDetail(models.Model):
-    sale = models.ForeignKey('Sale', verbose_name='venda')
-    product = models.ForeignKey('Product', verbose_name='produto')
-    quantity = models.PositiveSmallIntegerField('quantidade')
-    price_sale = models.DecimalField(
-        'preço de venda', max_digits=6, decimal_places=2, default=0)
-
-    def __str__(self):
-        return str(self.sale)
-
-    def price_sale_formated(self):
-        return "R$ %s" % number_format(self.price_sale, 2)

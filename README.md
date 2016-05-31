@@ -45,6 +45,11 @@ class Euro(models.Model):
 
 Importando os dados de um CSV.
 
+Variação do dólar
+
+http://www.dolarhoje.net.br/dolar-comercial.php
+
+
 ```python
 # dollar.csv
 date,value
@@ -246,6 +251,7 @@ $(function () {
 });
 ```
 
+Porcentagem de produtos por categoria
 
 
 # Projeto antigo
