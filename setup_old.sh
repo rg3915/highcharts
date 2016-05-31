@@ -6,17 +6,16 @@ green=`tput setaf 2`
 reset=`tput sgr0`
 
 echo "${green}>>> Creating virtualenv${reset}"
-# with Python 3
-python -m venv .venv
+virtualenv -p python3 .venv
 source .venv/bin/activate
 
-cd highcharts
+cd djangoproject
 
 echo "${green}>>> Installing the Django${reset}"
 pip install -r requirements.txt
-python manage.py makemigrations core
+python manage.py makemigrations
 python manage.py migrate
-python manage.py shell < highcharts/shell/shell_dollar.py
-python manage.py shell < highcharts/shell/shell_euro.py
+python manage.py loaddata fixtures.json
+# python manage.py dumpdata core --format=json --indent=2 > fixtures.json
 python manage.py runserver
 echo "${green}>>> Done${reset}"
