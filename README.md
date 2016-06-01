@@ -338,11 +338,11 @@ Veja o resultado:
 
 Veja também:
 
-[euro_graphic.js](static/js/euro_graphic.js)
+[euro_graphic.js](highcharts/core/static/js/euro_graphic.js)
 
 ![euro_img](img/euro.png)
 
-[product_graphic.js](static/js/product_graphic.js)
+[product_graphic.js](highcharts/core/static/js/product_graphic.js)
 
 ![product_img](img/product.png)
 
