@@ -336,6 +336,17 @@ Veja o resultado:
 
 ![dollar_img](img/dollar.png)
 
+Veja também:
+
+[euro_graphic.js](static/js/euro_graphic.js)
+
+![euro_img](img/euro.png)
+
+[product_graphic.js](static/js/product_graphic.js)
+
+![product_img](img/product.png)
+
+
 
 
 # Projeto antigo
