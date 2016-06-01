@@ -1,6 +1,10 @@
 from django.shortcuts import render
 
 
+def home(request):
+    return render(request, 'index.html')
+
+
 def dollar_graphic(request):
     return render(request, 'dollar_graphic.html')
 
