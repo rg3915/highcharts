@@ -16,7 +16,7 @@ class EuroAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['product', 'category']
+    list_display = ['product', 'category', 'price']
     list_filter = ('category',)
 
 
