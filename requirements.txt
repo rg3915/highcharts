@@ -1,3 +1,4 @@
 dj-database-url==0.4.1
 Django==1.9.6
 python-decouple==3.0
+selenium==2.53.2

@@ -64,50 +64,59 @@ http://br.investing.com/currencies/eur-brl-historical-data
 Veja os CSV:
 
 [euro.csv](highcharts/fix/euro.csv)
+
 [category.csv](highcharts/fix/category.csv)
+
 [product.csv](highcharts/fix/product.csv)
 
+Importando os dados via shell
 
+```bash
+python manage.py shell < highcharts/shell/shell_dollar.py
+```
+
+Eis o código:
 
 ```python
 # shell_dollar.py
 import csv
-import datetime
-from highcharts.core.models import Dollar
+import datetime as dt
+from highcharts.core.models import Euro
 
-dollar_list = []
+euro_list = []
 
-''' Lendo os dados de dollar.csv '''
-with open('highcharts/fix/dollar.csv', 'r') as f:
+''' Lendo os dados de euro.csv '''
+with open('highcharts/fix/euro.csv', 'r') as f:
     r = csv.DictReader(f)
     for dct in r:
-        dollar_list.append(dct)
+        d = dct['date']
+        # Convert '%d/%m/%Y' to '%Y-%m-%d'.
+        d = dt.datetime.strptime(d, '%d/%m/%Y').strftime('%Y-%m-%d')
+        euro_list.append((d, dct['value']))
     f.close()
 
 
-for i in dollar_list:
-    d = i['date']
-    # Transforma '%d/%m/%Y' para '%Y-%m-%d'.
-    d = datetime.datetime.strptime(d, '%d/%m/%Y').strftime('%Y-%m-%d')
-    obj = Dollar.objects.create(
-        date=d,
-        value=i['value']
-    )
-
+obj = [Euro(date=val[0], value=val[1]) for val in euro_list]
+Euro.objects.bulk_create(obj)
 
 # done
 ```
+
+Vamos criar um arquivo chamado `graphics.py`.
 
 ```bash
 touch graphics.py
 ```
 
+Este é o seu código:
+
 ```python
 # graphics.py
 import json
+from django.db.models import Count
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
-from .models import Dollar
+from .models import Dollar, Euro, Product
 
 
 def dollar_json(request):
@@ -115,18 +124,26 @@ def dollar_json(request):
     lista = [{'dia': i['date'], 'valor': float(i['value'])} for i in data]
     resp = json.dumps(lista, cls=DjangoJSONEncoder)
     return HttpResponse(resp)
-```
 
-```python
-# core/urls.py
-from django.conf.urls import url
-from highcharts.core.graphics import dollar_json
-from highcharts.core.views import dollar_graphic
 
-urlpatterns = [
-    url(r'^dollar-graphic/$', dollar_graphic),
-    url(r'^dollar_json/$', dollar_json),
-]
+def euro_json(request):
+    data = Euro.objects.values('date', 'value')
+    lista = [{'dia': i['date'], 'valor': float(i['value'])} for i in data]
+    resp = json.dumps(lista, cls=DjangoJSONEncoder)
+    return HttpResponse(resp)
+
+
+def product_json(request):
+    ''' Porcentagem de produtos por categoria '''
+    data = Product.objects.values('category')\
+        .annotate(value=Count('category'))\
+        .order_by('category').values('category', 'category__category', 'value')
+    total = Product.objects.all().count()
+    ''' Podemos reescrever o dicionário com nosso próprio nome de campos. '''
+    lista = [{'categoria': item['category__category'],
+              'porcentagem': float((item['value'] / total) * 100)} for item in data]
+    s = json.dumps(lista, cls=DjangoJSONEncoder)
+    return HttpResponse(s)
 ```
 
 ```python
@@ -140,6 +157,29 @@ urlpatterns = [
 ]
 ```
 
+Crie também um `core/urls.py`.
+
+```bash
+touch core/urls.py
+```
+
+```python
+# core/urls.py
+from django.conf.urls import url
+from highcharts.core.graphics import dollar_json, euro_json, product_json
+from highcharts.core import views as v
+
+urlpatterns = [
+    url(r'^$', v.home, name='home'),
+    url(r'^dollar-graphic/$', v.dollar_graphic, name='dollar-graphic'),
+    url(r'^euro-graphic/$', v.euro_graphic, name='euro-graphic'),
+    url(r'^product-graphic/$', v.product_graphic, name='product-graphic'),
+    url(r'^dollar_json/$', dollar_json),
+    url(r'^euro_json/$', euro_json),
+    url(r'^product_json/$', product_json),
+]
+```
+
 View para o Template.
 
 ```python
@@ -147,8 +187,20 @@ View para o Template.
 from django.shortcuts import render
 
 
+def home(request):
+    return render(request, 'index.html')
+
+
 def dollar_graphic(request):
     return render(request, 'dollar_graphic.html')
+
+
+def euro_graphic(request):
+    return render(request, 'euro_graphic.html')
+
+
+def product_graphic(request):
+    return render(request, 'product_graphic.html')
 ```
 
 Dentro da pasta `highcharts/core/` crie a pasta `templates`.
@@ -161,18 +213,39 @@ touch templates/dollar_graphic.html
 
 ```html
 # base.html
+{% load static %}
 <html>
 <head>
   <meta charset="UTF-8">
   <title>Highcharts</title>
 
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+
   <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+  <script src="{% static "js/jquery.min.js" %}"></script>
   <!-- HighCharts JS -->
-  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
+  <script src="{% static "js/highcharts.js" %}"></script>
+  <!-- Bootstrap JS -->
+  <script src="{% static "js/bootstrap.min.js" %}"></script>
+
+  <style type="text/css">
+    /* Move down content because we have a fixed navbar that is 50px tall */
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+      /*color: #5a5a5a;*/
+    }
+  </style>
 
 </head>
 <body>
+  {% include "nav.html" %}
   <div class="container">
     {% block content %}{% endblock content %}
     {% block js %}{% endblock js %}
@@ -194,6 +267,8 @@ touch templates/dollar_graphic.html
   <script src="{% static 'js/dollar_graphic.js' %}"></script>
 {% endblock js %}
 ```
+
+Crie a pasta `static/js`.
 
 ```bash
 mkdir -p static/js
@@ -257,8 +332,9 @@ $(function () {
 });
 ```
 
-Porcentagem de produtos por categoria
+Veja o resultado:
 
+![dollar_img](img/dollar.png)
 
 
 
