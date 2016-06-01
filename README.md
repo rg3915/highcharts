@@ -10,7 +10,7 @@ source setup.sh
 
 ## Tutorial
 
-Veja o modelo
+### Modelo
 
 ```python
 # models.py
@@ -21,31 +21,25 @@ class Dollar(models.Model):
     date = models.DateField('data')
     value = models.DecimalField('valor', max_digits=4, decimal_places=3)
 
-    class Meta:
-        ordering = ['date']
-        verbose_name = 'dólar'
-        verbose_name_plural = 'dólares'
-
-    def __str__(self):
-        return self.value
-
 
 class Euro(models.Model):
     date = models.DateField('data')
     value = models.DecimalField('valor', max_digits=4, decimal_places=3)
 
-    class Meta:
-        ordering = ['date']
-        verbose_name = 'euro'
-        verbose_name_plural = 'euros'
 
-    def __str__(self):
-        return self.value
+class Category(models.Model):
+    category = models.CharField('categoria', max_length=50, unique=True)
+
+
+class Product(models.Model):
+    category = models.ForeignKey('Category', verbose_name='categoria')
+    product = models.CharField('Produto', max_length=60, unique=True)
+    price = models.DecimalField('Preço', max_digits=6, decimal_places=2)
 ```
 
-Importando os dados de um CSV.
+### Importando os dados de um CSV
 
-Variação do dólar
+**Variação do dólar**
 
 http://www.dolarhoje.net.br/dolar-comercial.php
 
@@ -62,6 +56,18 @@ date,value
 11/1/2016,4.049
 ...
 ```
+
+**Variação do euro**
+
+http://br.investing.com/currencies/eur-brl-historical-data
+
+Veja os CSV:
+
+[euro.csv](highcharts/fix/euro.csv)
+[category.csv](highcharts/fix/category.csv)
+[product.csv](highcharts/fix/product.csv)
+
+
 
 ```python
 # shell_dollar.py
