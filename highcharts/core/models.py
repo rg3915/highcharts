@@ -11,7 +11,7 @@ class Dollar(models.Model):
         verbose_name_plural = 'dólares'
 
     def __str__(self):
-        return self.value
+        return str(self.value)
 
 
 class Euro(models.Model):
@@ -24,7 +24,7 @@ class Euro(models.Model):
         verbose_name_plural = 'euros'
 
     def __str__(self):
-        return self.value
+        return str(self.value)
 
 
 class Category(models.Model):

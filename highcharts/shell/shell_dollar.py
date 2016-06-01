@@ -1,5 +1,5 @@
 import csv
-import datetime
+import datetime as dt
 from highcharts.core.models import Dollar
 
 dollar_list = []
@@ -8,18 +8,14 @@ dollar_list = []
 with open('highcharts/fix/dollar.csv', 'r') as f:
     r = csv.DictReader(f)
     for dct in r:
-        dollar_list.append(dct)
+        d = dct['date']
+        # Convert '%d/%m/%Y' to '%Y-%m-%d'.
+        d = dt.datetime.strptime(d, '%d/%m/%Y').strftime('%Y-%m-%d')
+        dollar_list.append((d, dct['value']))
     f.close()
 
 
-for i in dollar_list:
-    d = i['date']
-    # Transforma '%d/%m/%Y' para '%Y-%m-%d'.
-    d = datetime.datetime.strptime(d, '%d/%m/%Y').strftime('%Y-%m-%d')
-    obj = Dollar.objects.create(
-        date=d,
-        value=i['value']
-    )
-
+obj = [Dollar(date=val[0], value=val[1]) for val in dollar_list]
+Dollar.objects.bulk_create(obj)
 
 # done
