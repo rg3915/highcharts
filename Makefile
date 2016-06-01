@@ -3,3 +3,9 @@ shell_dollar:
 
 shell_euro:
 	python manage.py shell < highcharts/shell/shell_euro.py
+
+shell_category:
+	python manage.py shell < highcharts/shell/shell_category.py
+
+shell_product:
+	python manage.py shell < highcharts/shell/shell_product.py

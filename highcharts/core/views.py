@@ -7,3 +7,7 @@ def dollar_graphic(request):
 
 def euro_graphic(request):
     return render(request, 'euro_graphic.html')
+
+
+def product_graphic(request):
+    return render(request, 'product_graphic.html')
