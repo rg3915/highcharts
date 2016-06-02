@@ -62,3 +62,13 @@ target/
 todo.txt
 *migrations/
 highcharts/core/migrations/
+
+_minted-highcharts/
+*aux
+*fdb*
+*fls
+*nav
+*out
+*snm
+*toc
+*vrb
