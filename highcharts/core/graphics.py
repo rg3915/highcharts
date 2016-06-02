@@ -25,7 +25,7 @@ def product_json(request):
         .annotate(value=Count('category'))\
         .order_by('category').values('category', 'category__category', 'value')
     total = Product.objects.all().count()
-    ''' Podemos reescrever o dicionário com nosso próprio nome de campos. '''
+    ''' Podemos reescrever o dicionário com nossos próprios nomes de campos. '''
     lista = [{'categoria': item['category__category'],
               'porcentagem': float((item['value'] / total) * 100)} for item in data]
     s = json.dumps(lista, cls=DjangoJSONEncoder)

@@ -12,3 +12,19 @@ shell_product:
 
 screenshot:
 	python highcharts/selenium/selenium_screenshot.py
+
+pdf:
+	latexmk -pdf -shell-escape highcharts.tex
+
+pvc:
+	latexmk -pdf -shell-escape -pvc highcharts.tex
+
+pdf43:
+	latexmk -pdf -shell-escape highcharts43.tex
+
+pvc43:
+	latexmk -pdf -shell-escape -pvc highcharts43.tex
+
+clear:
+	latexmk -c
+	rm *.nav *.snm *.vrb

@@ -81,25 +81,22 @@ Eis o código:
 # shell_dollar.py
 import csv
 import datetime as dt
-from highcharts.core.models import Euro
+from highcharts.core.models import Dollar
 
-euro_list = []
+dollar_list = []
 
-''' Lendo os dados de euro.csv '''
-with open('highcharts/fix/euro.csv', 'r') as f:
+''' Lendo os dados de dollar.csv '''
+with open('highcharts/fix/dollar.csv', 'r') as f:
     r = csv.DictReader(f)
     for dct in r:
-        d = dct['date']
         # Convert '%d/%m/%Y' to '%Y-%m-%d'.
-        d = dt.datetime.strptime(d, '%d/%m/%Y').strftime('%Y-%m-%d')
-        euro_list.append((d, dct['value']))
+        d = dt.datetime.strptime(dct['date'], '%d/%m/%Y').strftime('%Y-%m-%d')
+        dollar_list.append((d, dct['value']))
     f.close()
 
 
-obj = [Euro(date=val[0], value=val[1]) for val in euro_list]
-Euro.objects.bulk_create(obj)
-
-# done
+obj = [Dollar(date=val[0], value=val[1]) for val in dollar_list]
+Dollar.objects.bulk_create(obj)
 ```
 
 Vamos criar um arquivo chamado `graphics.py`.
@@ -139,7 +136,7 @@ def product_json(request):
         .annotate(value=Count('category'))\
         .order_by('category').values('category', 'category__category', 'value')
     total = Product.objects.all().count()
-    ''' Podemos reescrever o dicionário com nosso próprio nome de campos. '''
+    ''' Podemos reescrever o dicionário com nossos próprios nomes de campos. '''
     lista = [{'categoria': item['category__category'],
               'porcentagem': float((item['value'] / total) * 100)} for item in data]
     s = json.dumps(lista, cls=DjangoJSONEncoder)
@@ -209,6 +206,8 @@ Dentro da pasta `highcharts/core/` crie a pasta `templates`.
 mkdir templates
 touch templates/base.html
 touch templates/dollar_graphic.html
+touch templates/euro_graphic.html
+touch templates/product_graphic.html
 ```
 
 ```html
