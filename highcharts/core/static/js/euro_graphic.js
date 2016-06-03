@@ -1,7 +1,8 @@
 $(function () {
     var url = "/euro_json/";
 
-    $.getJSON(url, function(data){
+    $.getJSON(url, function(res){
+        var data = res.euro;
         console.log(data);
 
         $('#euro-chart').highcharts({
