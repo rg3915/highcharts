@@ -14,8 +14,7 @@ def dollar_json(request):
 def euro_json(request):
     data = Euro.objects.values('date', 'value')
     lista = [[i['date'], float(i['value'])] for i in data]
-    resp = json.dumps(lista, cls=DjangoJSONEncoder)
-    return HttpResponse(resp)
+    return JsonResponse({'euro': lista})
 
 
 def product_json(request):
