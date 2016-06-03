@@ -26,5 +26,4 @@ def product_json(request):
     ''' Podemos reescrever o dicionário com nossos próprios nomes de campos. '''
     lista = [{'categoria': item['category__category'],
               'porcentagem': float((item['value'] / total) * 100)} for item in data]
-    s = json.dumps(lista, cls=DjangoJSONEncoder)
-    return HttpResponse(s)
+    return JsonResponse({'products' : lista})

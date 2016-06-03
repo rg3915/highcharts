@@ -6,7 +6,7 @@ $(function () {
         /* Transformando o dicionário em lista.
            Com o comando map eu coloco uma lista dentro da outra,
            necessário para este tipo de gráfico. */
-        var data = res.map(function (v) {
+        var data = res.products.map(function (v) {
             return [v.categoria, v.porcentagem]
         });
 
