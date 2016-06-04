@@ -1,7 +1,5 @@
-import json
 from django.db.models import Count
-from django.core.serializers.json import DjangoJSONEncoder
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from .models import Dollar, Euro, Product
 
 
@@ -26,4 +24,4 @@ def product_json(request):
     ''' Podemos reescrever o dicionário com nossos próprios nomes de campos. '''
     lista = [{'categoria': item['category__category'],
               'porcentagem': float((item['value'] / total) * 100)} for item in data]
-    return JsonResponse({'products' : lista})
+    return JsonResponse({'products': lista})
