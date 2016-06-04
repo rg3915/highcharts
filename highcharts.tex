@@ -44,6 +44,9 @@
 % Ambiente html
 \newminted{html}{bgcolor=cyan!25,linenos}
 
+% Ambiente json
+\newminted{json}{}
+
 \tikzstyle{every node}=[anchor=west]
 \tikzstyle{selected}=[draw=red,fill=green!30]
 \tikzstyle{optional}=[dashed,fill=gray!50]
@@ -232,10 +235,8 @@ python manage.py shell < highcharts/shell/shell_dollar.py
 
 \begin{pythoncode}
 # graphics.py
-import json
 from django.db.models import Count
-from django.core.serializers.json import DjangoJSONEncoder
-from django.http import HttpResponse
+from django.http import JsonResponse
 from .models import Dollar, Euro, Product
 
 
@@ -243,8 +244,7 @@ def dollar_json(request):
     data = Dollar.objects.values('date', 'value')
     lista = [{'dia': i['date'], 
               'valor': float(i['value'])} for i in data]
-    resp = json.dumps(lista, cls=DjangoJSONEncoder)
-    return HttpResponse(resp)
+    return JsonResponse({'dollar': lista})
 \end{pythoncode}
 
 \end{frame}
@@ -254,10 +254,8 @@ def dollar_json(request):
 \begin{pythoncode}
 def euro_json(request):
     data = Euro.objects.values('date', 'value')
-    lista = [{'dia': i['date'], 
-              'valor': float(i['value'])} for i in data]
-    resp = json.dumps(lista, cls=DjangoJSONEncoder)
-    return HttpResponse(resp)
+    lista = [[i['date'], float(i['value'])] for i in data]
+    return JsonResponse({'euro': lista})
 \end{pythoncode}
 
 \end{frame}
@@ -295,6 +293,44 @@ urlpatterns = [
     url(r'^product_json/$', product_json),
 ]
 \end{pythoncode}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{http://localhost:8000/dollar\_json/}
+
+\begin{jsoncode}
+{
+    "dollar": [{
+            "dia": "2016-01-01",
+            "valor": 3.956
+        },
+        {
+            "dia": "2016-01-04",
+            "valor": 4.033
+        },
+        ...,
+        {
+            "dia": "2016-05-26",
+            "valor": 3.596
+        }
+    ]
+}
+\end{jsoncode}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{http://localhost:8000/euro\_json/}
+
+\begin{jsoncode}
+{
+    "euro": [
+        ["2016-01-01", 4.301],
+        ["2016-01-04", 4.376],
+        ...
+        ["2016-05-26", 4.005]
+    ]
+}
+\end{jsoncode}
 
 \end{frame}
 
@@ -401,7 +437,7 @@ $(function () {
         /* Transformando o dicionário em lista.
            Com o comando map eu coloco uma lista dentro da outra,
            necessário para este tipo de gráfico. */
-        var data = res.map(function (v) {
+        var data = res.dollar.map(function (v) {
             return [v.dia, v.valor]
         });
 \end{htmlcode}
@@ -496,13 +532,12 @@ def product_json(request):
         .order_by('category')\
         .values('category', 'category__category', 'value')
     total = Product.objects.all().count()
-    '''Podemos reescrever o dicionário com nossos próprios 
-    nomes de campos. '''
+    ''' Podemos reescrever o dicionário com nossos próprios 
+        nomes de campos. '''
     lista = [{'categoria': item['category__category'],
-        'porcentagem': float((item['value'] / total) * 100)} 
-        for item in data]
-    s = json.dumps(lista, cls=DjangoJSONEncoder)
-    return HttpResponse(s)
+              'porcentagem': float((item['value'] / total) * 100)} 
+              for item in data]
+    return JsonResponse({'products': lista})
 \end{pythoncode}
 
 
@@ -518,7 +553,7 @@ $(function () {
         /* Transformando o dicionário em lista.
            Com o comando map eu coloco uma lista dentro da outra,
            necessário para este tipo de gráfico. */
-        var data = res.map(function (v) {
+        var data = res.products.map(function (v) {
             return [v.categoria, v.porcentagem]
         });
 \end{htmlcode}
